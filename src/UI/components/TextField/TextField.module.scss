@@ -1,0 +1,80 @@
+.textFieldWrapper {
+  position: relative;
+}
+
+.textField {
+  padding-top: 17px;
+  padding-right: 20px;
+  padding-bottom: 17px;
+  padding-left: 20px;
+  background-color: var(--white);
+  color: var(--black);
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid var(--softGrey);
+  border-radius: 4px;
+  width: 100%;
+
+  &::placeholder {
+    color: var(--grey);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &:disabled {
+    color: var(--lightGrey);
+
+    &::placeholder {
+      color: var(--lightGrey);
+    }
+  }
+}
+
+.textFieldError {
+  border: 1px solid var(--red) !important;
+}
+
+.errorMessage {
+  position: absolute;
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.textFieldWithLeftIcon {
+  padding-left: 46px;
+}
+
+.textFieldWithRightIcon {
+  padding-right: 46px;
+}
+
+.textFieldPlaceholder {
+  margin-bottom: 7px;
+  display: block;
+  color: var(--grey);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+@mixin iconBaseStyles {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftIcon {
+  @include iconBaseStyles;
+
+  left: 16px;
+}
+
+.rightIcon {
+  @include iconBaseStyles;
+
+  right: 16px;
+}

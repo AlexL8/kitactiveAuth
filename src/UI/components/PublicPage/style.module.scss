@@ -1,0 +1,28 @@
+.publicPage {
+	background-image: url(../../../assets/images/Rectangle.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 100vh;
+}
+
+.publicPageContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	max-width: 1200px;
+    width: 100%;
+    height: 100%;
+}
+
+.footer {
+	color: var(--grey-main);
+	font-family: var(--roboto);
+	font-size: var(--small);
+	height: 100px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}

@@ -4,7 +4,6 @@ import { NavigateFunction } from "react-router/dist/lib/hooks";
 import { Thunk } from "../../types";
 import { UserEntity } from "../UserEntity";
 import {
-  ILoginResponse,
   UserRepository,
   IUserRepository
 } from "../UserRepository";

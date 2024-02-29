@@ -1,0 +1,32 @@
+.authFieldWrapper {
+  position: relative;
+
+  input {
+    width: 100%;
+    border: 1px solid var(--extraLightGrey);
+    border-radius: 4px;
+    padding-top: 12px;
+    padding-right: 21px;
+    padding-bottom: 12px;
+    padding-left: 21px;
+  }
+}
+
+.authFieldWrapperWithLeftIcon {
+  input {
+    padding-left: 46px;
+  }
+}
+
+.authFieldWrapperWithRightIcon {
+  input {
+    padding-right: 46px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}

@@ -1,18 +1,29 @@
-import { RegistrationForm } from '@src/components/RegistrationForm';
-import { PAGES_CONFIG } from '@src/constants/pages';
-import { useCurrentUser } from '@src/hooks/useCurrentUser';
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {useStore} from "../../../Core/store";
+import {useDispatch} from "react-redux";
+import styles from './style.module.scss';
+import { Form } from 'formik';
 
-const Registration = () => {
-  const currentUser = useCurrentUser();
-  const navigate = useNavigate();
+export const Registration = () => {
+    const dispatch = useDispatch()
+    const { asyncActions } = useStore((store) => ({
+        User: store.UserEntity
+    }))
+    
 
-  if (currentUser.data) return <Navigate to={PAGES_CONFIG.dashboard.route} />;
+    const onClick = () => {
+        // @ts-ignore
+        dispatch(asyncActions.User.registration({email: 'ddsa', password: '1234', name: 'dima'}))
+    }
 
   return (
-    <RegistrationForm toLogin={() => navigate(PAGES_CONFIG.login.route)} />
+    <div className={styles.registration}>
+      <div className={styles.registrationHeader}>
+        <h1 className={styles.registrationTtile}>Sign up to Service</h1>
+        <div className={styles.registrationSubTitle}>Quick & Simple way to Automate your smth.</div>
+        <Form/>
+      </div>
+
+    </div>
   );
 };
-
-export default Registration;

@@ -1,0 +1,27 @@
+.registration {
+	background-color: var(--white);
+	max-width: 570px;
+	max-height: 590px;
+	border: 1px solid var(--grey-border);
+}
+
+.registrationHeader {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 30px;
+}
+
+.registrationTtile {
+	font-family: var(--fontB);
+	font-size: var(--title);
+	color: var(--black)
+}
+
+.registrationSubTitle {
+	font-family: var(--fontL);
+	font-size: var(--medium);
+	color: var(--grey-main);
+}
+

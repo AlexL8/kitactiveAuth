@@ -3,38 +3,38 @@ import { useSelector } from "react-redux";
 import { NavigateFunction } from "react-router/dist/lib/hooks";
 import { useNavigate } from "react-router-dom";
 
-import { ServicesEntity } from "core/Services/ServicesEntity";
+import { UserEntity } from "./User/UserEntity";
 import {
-  IServicesInteractor,
-  ServicesInteractor,
-} from "core/Services/ServicesInteractor";
+  IUserInteractor,
+  UserInteractor,
+} from "./User/UserInteractor";
 
 export const store = configureStore({
   reducer: {
-    ServicesEntity: ServicesEntity.reducer,
+    UserEntity: UserEntity.reducer,
   },
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({})],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type IStore = ReturnType<typeof store.getState>;
 
 interface IActions {
-  Services: typeof ServicesEntity.actions;
+  User: typeof UserEntity.actions;
 }
 
 export const actions: IActions = {
-  Services: ServicesEntity.actions,
+  User: UserEntity.actions,
 };
 
 interface IAsyncActions {
-  Services: IServicesInteractor;
+  User: IUserInteractor;
 }
 
 type IAsyncActionsFn = (navigate: NavigateFunction) => IAsyncActions;
 
 const asyncActions: IAsyncActionsFn = (navigate: NavigateFunction) => {
   return {
-    Services: ServicesInteractor(navigate),
+    User: UserInteractor(navigate),
   };
 };
 
@@ -48,8 +48,3 @@ export const useStore = <T>(
     asyncActions: asyncActions(navigation),
   };
 };
-
-useStore((store) => ({
-  services: ServicesEntity,
-  ac: store.ServicesEntity
-}))

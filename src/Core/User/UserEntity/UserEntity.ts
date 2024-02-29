@@ -12,7 +12,7 @@ import {
 
 const initialState: IUserEntityState & IWithNetworkState = {
   ...withNetworkState,
-  token: null
+  token: null,
 };
 
 export const UserEntity = createSlice({
@@ -21,6 +21,8 @@ export const UserEntity = createSlice({
   reducers: {
     ...withNetworkReducers,
     setToken(state, action: PayloadAction<ILoginResponse>) {
+      console.log(state);
+      console.log(action);
       state.token = action.payload.token
     }
   },

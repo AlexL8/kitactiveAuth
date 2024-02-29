@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import {PRIVATE_PAGES, PUBLIC_PAGES} from "../../constants/pages";
 
-function App() {
+import {PageKey} from "../../types/pages";
+import {Login} from "../pages/Login/Login";
+import { Registration } from "../pages/Registration/Registration";
+import {PublicPage} from "../components/PublicPage/PublicPage";
+import {PrivateRoute} from "../components/PrivatePage/PrivatePage";
+import {Main} from "../pages/Main/Main";
+
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+        {PUBLIC_PAGES.map(({ key, route }) => {
+          const Page = pagesMap[key];
+
+          return (
+              <Route
+                  key={key}
+                  path={route}
+                  element={
+                    <PublicPage>
+                      <Page />
+                    </PublicPage>
+                  }
+              />
+          );
+        })}
+
+      {PRIVATE_PAGES.map(({ key, route }) => {
+          const Page = pagesMap[key];
+
+          return (
+              <Route
+                  key={key}
+                  path={route}
+                  element={
+                      <PrivateRoute>
+                          <Page />
+                      </PrivateRoute>
+                  }
+              />
+          );
+      })}
+      </Routes>
   );
 }
 
-export default App;
+const pagesMap: { [key in PageKey]: React.FC } = {
+    login: Login,
+    registration: Registration,
+    main: Main
+};

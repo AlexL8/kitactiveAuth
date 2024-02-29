@@ -6,18 +6,18 @@ import { Client } from "../../../libs/Client";
 
 export const UserRepository: IUserRepository = {
   login: async (email, password) => {
-    const servicesResponse = await Client.post<ILoginResponse>("/api/login", {
+    const userResponse = await Client.post<ILoginResponse>("/api/login", {
       email,
       password
     });
-    return servicesResponse.data;
+    return userResponse.data;
   },
   registration: async (email, password, name) => {
-    const serviceResponse = await Client.post<void>(`/api/register`, {
+    const userResponse = await Client.post<void>(`/api/register`, {
       email,
       password,
       name
     });
-    return serviceResponse.data;
+    return userResponse.data;
   },
 };

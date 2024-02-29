@@ -1,13 +1,70 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import './assets/colors.scss';
+@import './assets/fonts.scss';
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto'), url("./assets/fonts/Roboto/Roboto-Regular.ttf") format('ttf');
+  font-weight: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'RobotoBold';
+  src: local('Roboto'), url("./assets/fonts/Roboto/Roboto-Bold.ttf") format('ttf');
+  font-weight: 700;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+          'Roboto',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lightGrey) var(--whiteSmoky);
+
+&:disabled {
+   cursor: not-allowed;
+ }
+
+&::-webkit-scrollbar {
+   height: 12px;
+   width: 12px;
+ }
+
+&::-webkit-scrollbar-track {
+   background: var(--whiteSmoky);
+ }
+
+&::-webkit-scrollbar-thumb {
+   background-color: var(--lightGrey);
+   border-radius: 5px;
+   border: 3px solid var(--whiteSmoky);
+
+&:hover {
+   background-color: var(--grey);
+ }
+}
+}
+
+body {
+  min-width: 1200px;
+}
+
+input {
+  outline: none;
+
+&:focus {
+   border: 1px solid var(--grey);
+ }
+}
+
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--grey);
+  display: inline-block;
 }
