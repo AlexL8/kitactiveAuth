@@ -21,8 +21,6 @@ export const UserEntity = createSlice({
   reducers: {
     ...withNetworkReducers,
     setToken(state, action: PayloadAction<ILoginResponse>) {
-      console.log(state);
-      console.log(action);
       state.token = action.payload.token
     }
   },

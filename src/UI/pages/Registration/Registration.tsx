@@ -1,29 +1,15 @@
 import React from 'react';
-import {useStore} from "../../../Core/store";
-import {useDispatch} from "react-redux";
-import styles from './style.module.scss';
-import { Form } from 'formik';
+import styles from './Registration.module.scss';
+import { SignupForm } from '../../components/SignupForm/SignupForm';
 
 export const Registration = () => {
-    const dispatch = useDispatch()
-    const { asyncActions } = useStore((store) => ({
-        User: store.UserEntity
-    }))
-    
-
-    const onClick = () => {
-        // @ts-ignore
-        dispatch(asyncActions.User.registration({email: 'ddsa', password: '1234', name: 'dima'}))
-    }
-
   return (
     <div className={styles.registration}>
       <div className={styles.registrationHeader}>
-        <h1 className={styles.registrationTtile}>Sign up to Service</h1>
+        <h1 className={styles.registrationTitle}>Sign up to Service</h1>
         <div className={styles.registrationSubTitle}>Quick & Simple way to Automate your smth.</div>
-        <Form/>
       </div>
-
+        <SignupForm/>
     </div>
   );
 };

@@ -1,0 +1,19 @@
+.notfound {
+	background-image: url(../../../assets/images/Rectangle2.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	color: var(--black);
+	font-family: var(--fontB);
+}
+
+.subTitle {
+	color: var(--black);
+	font-family: var(--fontB);
+}

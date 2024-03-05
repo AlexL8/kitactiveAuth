@@ -3,6 +3,7 @@
 	max-width: 570px;
 	max-height: 590px;
 	border: 1px solid var(--grey-border);
+	padding: 30px 100px;
 }
 
 .registrationHeader {
@@ -10,10 +11,11 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 30px;
+	padding: 0 30px;
+	margin-bottom: 30px;
 }
 
-.registrationTtile {
+.registrationTitle {
 	font-family: var(--fontB);
 	font-size: var(--title);
 	color: var(--black)

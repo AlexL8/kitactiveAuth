@@ -7,8 +7,10 @@
   padding-right: 20px;
   padding-bottom: 17px;
   padding-left: 20px;
+  margin-bottom: 40px;
   background-color: var(--white);
-  color: var(--black);
+  color: var(--softGrey);
+  font-family: var(--fontL);
   font-size: 14px;
   font-weight: 400;
   border: 1px solid var(--softGrey);
@@ -16,17 +18,24 @@
   width: 100%;
 
   &::placeholder {
-    color: var(--grey);
+    color: var(--medGrey);
+    font-family: var(--fontL);
     font-size: 14px;
     font-weight: 400;
   }
 
   &:disabled {
     color: var(--lightGrey);
+    font-family: var(--fontL);
 
     &::placeholder {
       color: var(--lightGrey);
+      font-family: var(--fontL);
     }
+  }
+
+  &:focus {
+    border: 1px solid var(--black);
   }
 }
 
@@ -37,8 +46,9 @@
 .errorMessage {
   position: absolute;
   color: var(--red);
-  font-size: 12px;
-  margin-top: 3px;
+  font-family: var(--fontL);
+  font-size: var(--medium);
+  margin-top: -35px;
 }
 
 .textFieldWithLeftIcon {
@@ -53,6 +63,7 @@
   margin-bottom: 7px;
   display: block;
   color: var(--grey);
+  font-family: var(--fontL);
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;

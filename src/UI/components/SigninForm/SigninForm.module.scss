@@ -1,0 +1,34 @@
+.signinForm {
+	padding: 0;
+}
+
+.showPasswordBtn {
+	background-image: url('../../../assets/images/1915454.svg');
+	background-size: cover;
+	border: none;
+	width: 16px;
+	height: 10px;
+}
+
+.signinFormBtnWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.signinFormText {
+	font-family: var(--fontL); 
+    font-size: var(--large);
+    color: var(--grey-main);
+	margin-bottom: 10px;
+}
+
+.signinFormBtn {
+	width: 100%;
+	color: var(--white);
+    font-family: var(--fontL);
+	background-color: var(--black);
+	border: 1px solid var(--white);
+	padding: 15px;
+	margin-bottom: 10px;
+}

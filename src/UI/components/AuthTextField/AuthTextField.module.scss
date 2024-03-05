@@ -3,7 +3,11 @@
 
   input {
     width: 100%;
-    border: 1px solid var(--extraLightGrey);
+    border: 1px solid var(--lightGrey);
+    color: var(--softGrey);
+    font-family: var(--fontL);
+    display: flex;
+    align-items: center;
     border-radius: 4px;
     padding-top: 12px;
     padding-right: 21px;

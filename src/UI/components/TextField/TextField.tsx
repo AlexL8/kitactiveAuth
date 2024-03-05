@@ -14,21 +14,6 @@ export interface TextFieldProps {
   rightIcon?: ReactNode;
   error?: string;
   required?: boolean;
-  onKeyUp?: (ev: React.KeyboardEvent<HTMLInputElement>) => void;
-  classes?: {
-    root?: string;
-    input?: string;
-    label?: string;
-    leftIcon?: string;
-    rightIcon?: string;
-  };
-  maxLength?: number;
-  onKeyPress?: (ev: React.KeyboardEvent<HTMLInputElement>) => void;
-  min?: number;
-  max?: number;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  dataTestid?: string;
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -44,24 +29,16 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       leftIcon,
       rightIcon,
       error,
-      required,
-      classes,
-      onKeyUp,
-      maxLength,
-      onKeyPress,
-      min,
-      max,
-      onFocus,
-      onBlur,
-      dataTestid,
+      required
     },
     ref,
   ) => {
+    // console.log()
     return (
-      <div className={classNames(styles.textFieldWrapper, classes?.root)}>
+      <div className={styles.textFieldWrapper}>
         {label && (
           <label
-            className={classNames(styles.textFieldPlaceholder, classes?.label)}
+            className={styles.textFieldPlaceholder}
             htmlFor={label}
           >
             {label}
@@ -69,7 +46,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         )}
 
         {leftIcon && (
-          <div className={classNames(styles.leftIcon, classes?.leftIcon)}>
+          <div className={styles.leftIcon}>
             {leftIcon}
           </div>
         )}
@@ -77,38 +54,29 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <input
           ref={ref}
           id={label}
-          data-testid={dataTestid}
-          maxLength={maxLength}
           className={classNames(
             {
               [styles.textField]: true,
               [styles.textFieldWithLeftIcon]: !!leftIcon,
               [styles.textFieldWithRightIcon]: !!rightIcon,
               [styles.textFieldError]: error,
-            },
-            classes?.input,
+            }
           )}
           name={name}
           type={type}
           value={value}
           onChange={onChange}
-          onKeyUp={onKeyUp}
           disabled={disabled}
           placeholder={placeholder}
           required={required}
-          onKeyPress={onKeyPress}
-          min={min}
-          max={max}
-          onFocus={onFocus}
           autoComplete={"off"}
-          onBlur={onBlur}
           contentEditable="true"
         />
 
         {!!error && <p className={styles.errorMessage}>{error}</p>}
 
         {rightIcon && (
-          <div className={classNames(styles.rightIcon, classes?.rightIcon)}>
+          <div className={styles.rightIcon}>
             {rightIcon}
           </div>
         )}

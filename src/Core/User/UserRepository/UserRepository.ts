@@ -1,6 +1,7 @@
 import {
   IUserRepository,
-  ILoginResponse
+  ILoginResponse,
+  IRegistrationResponse
 } from "../UserRepository";
 import { Client } from "../../../libs/Client";
 
@@ -12,8 +13,13 @@ export const UserRepository: IUserRepository = {
     });
     return userResponse.data;
   },
+  logout: async () => {
+  const userResponse = await Client.post<IRegistrationResponse>(`/api/logout`, {
+  });
+   return userResponse.data;
+ },
   registration: async (email, password, name) => {
-    const userResponse = await Client.post<void>(`/api/register`, {
+    const userResponse = await Client.post<IRegistrationResponse>(`/api/register`, {
       email,
       password,
       name

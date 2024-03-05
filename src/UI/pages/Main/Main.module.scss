@@ -1,0 +1,107 @@
+.main {
+  width: 100%;
+}
+
+.mainContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.mainTitle {
+  color: var(--black);
+  font-family: var(--fontB);
+  font-size: var(--title);
+  margin-bottom: 30px;
+}
+
+.fileList {
+  min-height: 500px;
+}
+
+
+.fileListTitle {
+  color: var(--softGrey);
+  font-family: var(--fontL);
+  margin-bottom: 30px;
+}
+
+.fileListHeader {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.fileListName {
+  color: var(--black);
+  font-family: var(--fontB);
+  font-size: var(--large);
+}
+
+.fileListType {
+  justify-self: center;
+  color: var(--black);
+  font-family: var(--fontB);
+  font-size: var(--large);
+}
+
+.fileListSize {
+  justify-self: center;
+  color: var(--black);
+  font-family: var(--fontB);
+  font-size: var(--large);
+}
+
+.fileListItem {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-bottom: 20px;
+}
+
+
+
+.itemName {
+  color: var(--softGrey);
+  font-family: var(--fontL);
+}
+
+.itemType {
+  justify-self: center;
+  color: var(--softGrey);
+  font-family: var(--fontL);
+}
+
+.itemSize {
+  justify-self: center;
+  color: var(--softGrey);
+  font-family: var(--fontL);
+}
+
+.itemBtnsContainer {
+  display: flex;
+  gap: 15px;
+}
+
+.itemBtn {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 0 10px;
+  font-family: var(--fontL);
+  font-size: var(--small);
+}
+
+
+
+
+.addNewFileBtn {
+  background: transparent;
+  padding: 15px 30px;
+  color: var(--black);
+  font-family: var(--fontB);
+  font-weight: bold;
+  font-size: var(--medium);
+  cursor: pointer;
+  border: 2px solid var(--black)
+}
