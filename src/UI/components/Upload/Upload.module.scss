@@ -67,6 +67,18 @@
   border: 1px solid var(--grey-border);
   width: 100%;
   margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.uploadBtn:disabled {
+  background-color: var(--grey-main);
+  color: var(--white);
+  padding: 20px;
+  font-family: var(--fontL);
+  border: 1px solid var(--grey-border);
+  width: 100%;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 

@@ -19,7 +19,7 @@ const Layout:  React.FC<Props> = ({ children }) => {
         <div className={styles.layout}>
             <div className={styles.headerLayout}>
                 <div className={styles.headerLayoutContainer}>
-                    <button onClick={() => console.log()} className={styles.headerLayoutBtn}>LOG OUT</button>
+                    <button onClick={() => dispatch(asyncActions.User.logout())} className={styles.headerLayoutBtn}>LOG OUT</button>
                 </div>
             </div>
             {children}

@@ -29,7 +29,7 @@
 
 .fileListHeader {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   margin-bottom: 30px;
 }
@@ -38,6 +38,7 @@
   color: var(--black);
   font-family: var(--fontB);
   font-size: var(--large);
+  align-self: center;
 }
 
 .fileListType {
@@ -56,15 +57,18 @@
 
 .fileListItem {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 20px;
+  align-items: center;
 }
-
-
 
 .itemName {
   color: var(--softGrey);
   font-family: var(--fontL);
+}
+
+.item {
+  justify-self: center;
 }
 
 .itemType {
@@ -90,10 +94,8 @@
   padding: 0 10px;
   font-family: var(--fontL);
   font-size: var(--small);
+  cursor: pointer;
 }
-
-
-
 
 .addNewFileBtn {
   background: transparent;

@@ -7,14 +7,11 @@ export const axios = axiosLib.create({
   withCredentials: false,
 });
 
-
 axios.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem(LOCAL_STORAGE_AUTH_TOKEN_KEY)
-      console.log('token', token)
-      if (config && config.headers) {
+      if (config && config.headers && token) {
         config.headers['Authorization'] = `Bearer ${token}`
-        console.log('config.headers', config.headers)
       }
       return config
     },

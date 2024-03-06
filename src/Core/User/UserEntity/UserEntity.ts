@@ -22,6 +22,9 @@ export const UserEntity = createSlice({
     ...withNetworkReducers,
     setToken(state, action: PayloadAction<ILoginResponse>) {
       state.token = action.payload.token
+    },
+    removeToken(state) {
+      state.token = null
     }
   },
 });

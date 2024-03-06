@@ -1,11 +1,5 @@
 .notfound {
-	background-image: url(../../../assets/images/Rectangle2.png);
-	background-repeat: no-repeat;
-	background-size: contain;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+
 }
 
 .title {
@@ -16,4 +10,13 @@
 .subTitle {
 	color: var(--black);
 	font-family: var(--fontB);
+	margin-bottom: 50px;
+}
+
+.link {
+	//color: var(--black);
+	font-family: var(--fontB);
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
 }

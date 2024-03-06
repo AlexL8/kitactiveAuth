@@ -13,7 +13,7 @@ export const PAGES_CONFIG: { [key in PageKey]: Page } = {
     },
     main: {
         key: 'main',
-        route: '/main',
+        route: '/',
         type: 'private',
     }
 };

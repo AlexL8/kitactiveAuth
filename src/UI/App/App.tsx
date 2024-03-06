@@ -8,9 +8,13 @@ import { Registration } from "../pages/Registration/Registration";
 import {PublicPage} from "../components/PublicPage/PublicPage";
 import {PrivateRoute} from "../components/PrivatePage/PrivatePage";
 import {Main} from "../pages/Main/Main";
+import {NotificationComponent} from "../../libs/Notification/Notification";
+import {Modals} from "../components/Modals/Modals";
+import {NotFound} from "../pages/NotFound/NotFound";
 
 export function App() {
   return (
+      <>
       <Routes>
         {PUBLIC_PAGES.map(({ key, route }) => {
           const Page = pagesMap[key];
@@ -43,7 +47,19 @@ export function App() {
               />
           );
       })}
+          <Route
+              key='main'
+              path='*'
+              element={
+                  <PublicPage>
+                      <NotFound />
+                  </PublicPage>
+              }
+          />
       </Routes>
+      <NotificationComponent />
+      <Modals />
+      </>
   );
 }
 

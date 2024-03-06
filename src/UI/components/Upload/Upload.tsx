@@ -1,35 +1,46 @@
-import React, {Dispatch, SetStateAction, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import useFileUpload from "react-use-file-upload";
 import { DocumentIcon } from "./DocumentIcon";
 import styles from './Upload.module.scss';
 import { createPortal } from "react-dom";
+import {useDispatch} from "../../../hooks/useDispatch";
+import {useStore} from "../../../Core/store";
+import {AddPreviews, CreateFilePreview, HandleSetFiles, IFilePreview} from "./interfaces";
+import {noop} from "lodash";
+import {useOnClickOutside} from "../../../hooks/useOnClickOutside";
 
-interface IFilePreview {
-  type: "image" | "document";
-  src?: string;
-  name?: string;
+export interface ModalProps {
+  onClose?: () => void;
+  title?: string;
 }
 
-interface IMyProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>,
-}
+const Upload: React.FC<ModalProps> = ({ onClose = noop, title }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [filePreviews, setFilePreviews] = useState<IFilePreview[]>([]);
 
-type AddPreviews = (files: File[]) => void;
-type CreateFilePreview = (file: File) => void;
-type HandleSetFiles = (e: React.ChangeEvent<HTMLInputElement>) => void;
+  useOnClickOutside(modalRef, onClose);
 
-const Upload: React.FC<IMyProps> = (setShowModal) => {
+  const dispatch = useDispatch()
+  const { asyncActions } = useStore((store) => ({
+    Files: store.FilesEntity
+  }))
+
+  const [totalSize, setTotalSize] = useState<number>(0);
+
   const {
     files,
     fileTypes,
-    totalSize,
     clearAllFiles,
-    createFormData,
-    setFiles,
+    setFiles
   } = useFileUpload();
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [filePreviews, setFilePreviews] = useState<IFilePreview[]>([]);
+  const largeAmountMemory = totalSize >= 1000000;
+  const bytesToMegabytes = (bytes: number): string => {
+    const megabytes: number = bytes / 1048576;
+    return megabytes.toFixed(2) + " MB";
+  }
+
 
   const portal = document.getElementById('portal');
   if (!portal) {
@@ -40,12 +51,10 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    const formData = createFormData();
-    console.log("formData", formData);
+    dispatch(asyncActions.Files.uploadFiles({ files }))
   };
 
   const addPreviews: AddPreviews = (files) => {
-    console.log("addFiles", files);
     files.forEach((file) => {
       createFilePreview(file);
     });
@@ -63,6 +72,7 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
   };
 
   const createFilePreview: CreateFilePreview = (file) => {
+    setTotalSize((prevState => prevState + file.size))
     const reader = new FileReader();
     reader.onload = (e) => {
       if (!e.target) return;
@@ -87,7 +97,7 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
   };
 
   return createPortal(
-      <div className={styles.upload}>
+      <div className={styles.upload} ref={modalRef}>
         <div className={styles.uploadContainer}>
           <h1 className={styles.uploadTitle}>Upload Files</h1>
           <p className={styles.uploadSubTitle}>Please use the form to upload any file(s) of your choosing.</p>
@@ -115,10 +125,12 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
                     </li>
                 ))}
               </ul>
+              <div className={styles.uploadText}>Number of files that can be added: {filePreviews.length}/20</div>
+              <div className={styles.uploadText}>The size of each file should not exceed 1MB.</div>
               {files.length > 0 && (
                   <ul className={styles.uploadList}>
                     <li className={styles.listItem}>File types found: {fileTypes.join(", ")}</li>
-                    <li className={styles.listItem}>Total Size: {totalSize}</li>
+                    <li className={styles.listItem}>Total Size: {bytesToMegabytes(totalSize)}</li>
                     <li className={styles.listItemClear}>
                       <button className={styles.uploadBtn} onClick={clearFiles}>CLEAR ALL</button>
                     </li>
@@ -126,7 +138,7 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
               )}
             </div>
             <button className={styles.uploadBtn} onClick={() => inputRef.current && inputRef.current.click()}>
-              OR SELECT FILES TO UPLOAD
+              SELECT FILES TO UPLOAD
             </button>
             <input
                 ref={inputRef}
@@ -137,12 +149,12 @@ const Upload: React.FC<IMyProps> = (setShowModal) => {
             />
           </div>
           <div className={styles.uploadBtnContainer}>
-            <button className={styles.uploadBtn} onClick={handleSubmit}>UPLOAD</button>
-            <button className={styles.uploadBtn}>BACK</button>
+            <button className={styles.uploadBtn} onClick={handleSubmit} disabled={largeAmountMemory || filePreviews.length > 20}>UPLOAD</button>
+            <button className={styles.uploadBtn} onClick={onClose}>BACK</button>
           </div>
         </div>
       </div>
-      , document.getElementById('portal') as HTMLElement)
+      ,document.getElementById('portal') as HTMLElement)
 }
 
 export default Upload;

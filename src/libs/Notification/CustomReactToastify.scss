@@ -1,0 +1,40 @@
+body .reactToastifyWrap {
+  width: auto;
+  min-width: 400px;
+  max-width: 580px;
+}
+
+body .reactToastifyContainer {
+  width: 100%;
+  min-height: 56px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 10px 32px rgba(var(--black-rgb), 0.17);
+  border-radius: 12px;
+  color: black;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+body .reactToastifyBody {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width: 480px) {
+  body .reactToastifyWrap {
+    width: 100vw;
+  }
+
+  body .reactToastifyContainer:not(:last-child) {
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #F5F5F5FF;
+  }
+
+  body .reactToastifyContainer:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+}

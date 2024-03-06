@@ -1,0 +1,25 @@
+.contentBlock {
+  margin: 0 10px;
+  flex: 1;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.icon {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.content {
+  padding-top: 8px;
+}

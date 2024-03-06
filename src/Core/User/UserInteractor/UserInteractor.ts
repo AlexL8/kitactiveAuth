@@ -9,10 +9,11 @@ import {
 } from "../UserRepository";
 import { PAGES_CONFIG } from "../../../constants/pages";
 import { LOCAL_STORAGE_AUTH_TOKEN_KEY } from "../../../constants/localStorage";
+import {INotification, Notification} from "../../../libs/Notification/Notification";
 
 export interface IUserInteractor {
   login: Thunk<{ email: string; password: string }>;
-  logout: Thunk<any>;
+  logout: Thunk<void>;
   registration:  Thunk<{ email: string; password: string; name: string }>;
 }
 
@@ -21,6 +22,7 @@ export const createUserInteractor = (
   Entity: typeof UserEntity,
   Navigation: NavigateFunction,
   Storage: Storage,
+  Notification: INotification
 ): IUserInteractor => ({
     login: createAsyncThunk(
         "UserInteractor/login",
@@ -29,7 +31,7 @@ export const createUserInteractor = (
                 dispatch(Entity.actions.setLoading(true));
                 const userLoginResponse = await Repository.login(email, password);
                 if (userLoginResponse.token) {
-                    Storage.setItem(LOCAL_STORAGE_AUTH_TOKEN_KEY, JSON.stringify(userLoginResponse.token))
+                    Storage.setItem(LOCAL_STORAGE_AUTH_TOKEN_KEY, userLoginResponse.token)
                     dispatch(Entity.actions.setToken(userLoginResponse));
                     Navigation(PAGES_CONFIG.main.route)
                 }
@@ -42,14 +44,14 @@ export const createUserInteractor = (
     ),
     logout: createAsyncThunk(
         "UserInteractor/login",
-        async ({ email, password }, { dispatch }) => {
+        async (_, { dispatch }) => {
             try {
                 dispatch(Entity.actions.setLoading(true));
-                const userLoginResponse = await Repository.login(email, password);
-                if (userLoginResponse.token) {
-                    Storage.setItem(LOCAL_STORAGE_AUTH_TOKEN_KEY, JSON.stringify(userLoginResponse.token))
-                    dispatch(Entity.actions.setToken(userLoginResponse));
-                    Navigation(PAGES_CONFIG.main.route)
+                const userLoginResponse = await Repository.logout();
+                if (userLoginResponse.status === 'ok') {
+                    Storage.removeItem(LOCAL_STORAGE_AUTH_TOKEN_KEY)
+                    dispatch(Entity.actions.removeToken());
+                    Navigation(PAGES_CONFIG.login.route)
                 }
             } catch (err: unknown) {
                 throw new Error("Ошибка логина");
@@ -65,9 +67,11 @@ export const createUserInteractor = (
                 dispatch(Entity.actions.setLoading(true));
                 const response = await Repository.registration(email, password, name);
                 if (response.status === 'ok') {
+                    Notification.success('Account created')
                     Navigation(PAGES_CONFIG.login.route)
                 }
             } catch (err) {
+                Notification.error('This account has already been created')
                 throw new Error("Ошибка регистрации");
             } finally {
                 dispatch(Entity.actions.setLoading(false));
@@ -77,4 +81,4 @@ export const createUserInteractor = (
 });
 
 export const UserInteractor = (Navigation: NavigateFunction) =>
-    createUserInteractor(UserRepository, UserEntity, Navigation, localStorage);
+    createUserInteractor(UserRepository, UserEntity, Navigation, localStorage, Notification);

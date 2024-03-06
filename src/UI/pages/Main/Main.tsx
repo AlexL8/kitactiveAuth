@@ -1,14 +1,42 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Upload from "../../components/Upload/Upload";
 import styles from "./Main.module.scss";
 import {DocumentIconSmall} from "./DocumentIconSmall";
+import {useDispatch} from "../../../hooks/useDispatch";
+import {useStore} from "../../../Core/store";
+import {ImagePreview} from "../../components/ImagePreview/ImagePreview";
+import classNames from "classnames";
+import {ModalsEntity} from "../../../Core/UIState/Modals";
+import {MODALS} from "../../components/Modals/Modals";
+import {Spinner} from "../../components/Spinner/Spinner";
 
 
 export const Main = () => {
-    const data = [{id: 1, name: 'ss', type: 'image', src: 'ss', size: '1212'},
-        {id: 1, name: 'ss', type: 'document', size: '1212'}];
+    const dispatch = useDispatch()
+    const { asyncActions, store } = useStore((store) => ({
+        Files: store.FilesEntity
+    }))
 
-    const [isShowModal, setShowModal] = useState(false)
+    const data = store.Files.files
+    const isLoading = store.Files.isLoading
+
+    const handleOpenModel = () => {
+        dispatch(
+            ModalsEntity.actions.open({
+                modalName: MODALS.UPLOAD_FILES,
+                props: {
+                    onCancel: () => dispatch(ModalsEntity.actions.close()),
+                    onConfirm: () => {dispatch(ModalsEntity.actions.close())},
+                },
+            }),
+        );
+    };
+
+    useEffect(() => {
+        dispatch(asyncActions.Files.getFiles())
+    }, [data])
+
+    if (isLoading) return <Spinner />
 
     return (
         <div className={styles.main}>
@@ -22,42 +50,30 @@ export const Main = () => {
                         <div className={styles.fileListName}>Preview</div>
                         <div className={styles.fileListName}>Name</div>
                         <div className={styles.fileListType}>Type</div>
-                        <div className={styles.fileListSize}>Size</div>
-                        <div></div>
+                        <div className={styles.fileListType}>Action</div>
                     </div>
                     {data.map(file => {
-                        if (file.type.match("image.*")) {
-
-                            }
-                            return (
-                                <div className={styles.fileListItem} key={file.id}>
-                                    {file.type === "image" ? (
-                                        <div>
-                                            <img className={styles.fileListImg}
-                                                 src={file.src}
-                                                 alt={file.name}
-                                                 width="2%"
-                                                 height="3%"
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className={styles.fileListIcon}>
-                                            <DocumentIconSmall/>
-                                        </div>
-                                    )}
-                                    <div className={styles.itemName}>{file.name}</div>
-                                    <div className={styles.itemType}>{file.type}</div>
-                                    <div className={styles.itemSize}>{file.size}</div>
-                                    <div className={styles.itemBtnsContainer}>
-                                        <button className={styles.itemBtn}>DOWNLOAD</button>
-                                        <button className={styles.itemBtn}>DELETE</button>
+                        return (
+                            <div className={styles.fileListItem} key={file.id}>
+                                {file.mimeType.match("image.*") ? (
+                                    <div className={styles.item}>
+                                        <ImagePreview imageId={file.url} />
                                     </div>
+                                ) : (
+                                    <div className={classNames(styles.fileListIcon, styles.item)}>
+                                        <DocumentIconSmall/>
+                                    </div>
+                                )}
+                                <div className={styles.itemName}>{file.name}</div>
+                                <div className={classNames(styles.itemName, styles.item)}>{file.mimeType}</div>
+                                <div className={classNames(styles.itemBtnsContainer, styles.item)}>
+                                    <button className={styles.itemBtn} onClick={() => dispatch(asyncActions.Files.deleteFile({id: file.id}))}>DELETE</button>
                                 </div>
-                            )
-                        })}
+                            </div>
+                        )
+                    })}
                 </div>
-                <button onClick={() => setShowModal(true)} className={styles.addNewFileBtn} type={"button"}>ADD NEW FILE</button>
-                {isShowModal && <Upload setShowModal={setShowModal}/>}
+                <button onClick={handleOpenModel} className={styles.addNewFileBtn} type={"button"}>ADD NEW FILE</button>
             </div>
         </div>
     );
