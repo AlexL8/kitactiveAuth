@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import Upload from "../../components/Upload/Upload";
+import React, {useEffect} from 'react';
 import styles from "./Main.module.scss";
 import {DocumentIconSmall} from "./DocumentIconSmall";
 import {useDispatch} from "../../../hooks/useDispatch";
@@ -16,9 +15,12 @@ export const Main = () => {
     const { asyncActions, store } = useStore((store) => ({
         Files: store.FilesEntity
     }))
-
     const data = store.Files.files
     const isLoading = store.Files.isLoading
+
+    useEffect(() => {
+        dispatch(asyncActions.Files.getFiles())
+    }, [])
 
     const handleOpenModel = () => {
         dispatch(
@@ -32,11 +34,11 @@ export const Main = () => {
         );
     };
 
-    useEffect(() => {
-        dispatch(asyncActions.Files.getFiles())
-    }, [data])
+    const handleDelete = async (id: string) => {
+        await dispatch(asyncActions.Files.deleteFile({id}))
+    }
 
-    if (isLoading) return <Spinner />
+    if (isLoading) return <div className={styles.spinner}><Spinner /></div>
 
     return (
         <div className={styles.main}>
@@ -67,7 +69,7 @@ export const Main = () => {
                                 <div className={styles.itemName}>{file.name}</div>
                                 <div className={classNames(styles.itemName, styles.item)}>{file.mimeType}</div>
                                 <div className={classNames(styles.itemBtnsContainer, styles.item)}>
-                                    <button className={styles.itemBtn} onClick={() => dispatch(asyncActions.Files.deleteFile({id: file.id}))}>DELETE</button>
+                                    <button className={styles.itemBtn} onClick={() => handleDelete(file.id)}>DELETE</button>
                                 </div>
                             </div>
                         )

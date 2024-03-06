@@ -107,3 +107,10 @@
   cursor: pointer;
   border: 2px solid var(--black)
 }
+
+.spinner {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+}

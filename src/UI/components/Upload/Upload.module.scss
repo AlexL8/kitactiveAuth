@@ -46,6 +46,7 @@
   color: var(--softGrey);
   font-family: var(--fontL);
   font-size: var(--medium);
+  margin-bottom: 10px;
 }
 
 .listItem {
@@ -60,6 +61,8 @@
 }
 
 .uploadBtn {
+  display: flex;
+  justify-content: center;
   background-color: var(--black);
   color: var(--white);
   padding: 20px;
@@ -90,3 +93,9 @@
   list-style: none;
 }
 
+.spinner {
+  position: relative;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+}

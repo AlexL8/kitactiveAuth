@@ -13,7 +13,7 @@ import {IStore} from "../../store";
 
 export interface IFilesInteractor {
   getFiles: Thunk<void>;
-  uploadFiles: Thunk<{ files: BlobFiles }>;
+  uploadFiles: Thunk<{ files: File[] }>;
   deleteFile:  Thunk<{ id: string }>;
   getFile:  Thunk<{ id: string }>;
 }
@@ -43,20 +43,23 @@ export const createFilesInteractor = (
     ),
     uploadFiles: createAsyncThunk(
         "FilesInteractor/uploadFiles",
-        async ({ files }, { dispatch, getState }) => {
+        async ({ files }, { dispatch, getState, rejectWithValue }) => {
             try {
                 dispatch(Entity.actions.setLoading(true));
+                dispatch(Entity.actions.setSubmitLoading(true));
                 const filesResponse = await Repository.setFiles(files);
                 if (filesResponse.status === 'ok') {
                     Notification.success('Files upload')
                     const state = getState() as IStore;
                     state.ModalsEntity.modalProps.onCancel && state.ModalsEntity.modalProps.onCancel()
+                    dispatch(FilesInteractor(Navigation).getFiles())
                 }
             } catch (err: unknown) {
                 Notification.error('Error upload')
                 throw new Error("Ошибка логина");
             } finally {
                 dispatch(Entity.actions.setLoading(false));
+                dispatch(Entity.actions.setSubmitLoading(false));
             }
         },
     ),
@@ -68,6 +71,7 @@ export const createFilesInteractor = (
                 const response = await Repository.deleteFile(id);
                 if (response.status === 'ok') {
                     Notification.success('File is deleted')
+                    dispatch(FilesInteractor(Navigation).getFiles())
                 }
             } catch (err) {
                 Notification.error('Error delete')
